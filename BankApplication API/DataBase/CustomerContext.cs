@@ -16,5 +16,6 @@ namespace BankApplication_API.DataBase
         public DbSet<Customer> Customer { get; set;}
         public object CustomerModel { get; internal set; }
         public DbSet<Bank> Bank { get; set; }
+        public object Category { get; set; }
     }
 }

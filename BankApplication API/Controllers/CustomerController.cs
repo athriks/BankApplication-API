@@ -43,6 +43,7 @@ namespace BankApplication_API.Controllers
 
                 if (newCustomer == null)
                 {
+                  return  NotFound("Failing Saved");
                 }
                 return Ok(newCustomer);
             }
