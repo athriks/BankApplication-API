@@ -44,15 +44,28 @@ namespace BankApplication_API.Controllers
             var user = await GetUser(Email, Name);
             if (user != null)
             {
-                model.CustomerId = Email;
-                model.AccountBalance = model.AccountBalance;
-                await _context.Bank.AddAsync(model);
-                await _context.SaveChangesAsync();
-                if (model == null)
-                {
-                    return NotFound("Deposit Failed");
-                }
-                return Ok(model);
+               
+                
+                    var BankData = await GetUpdateValues(Email);
+
+                    if (BankData != null)
+                    {
+                        model.CustomerId = Email;
+
+                        var newBalance = BankData.AccountBalance;
+                        BankData.AccountBalance = newBalance + model.AccountBalance;
+                        await _context.SaveChangesAsync();
+                        return Ok("Deposit Successful");
+                    }
+                    else
+                    {
+                    model.CustomerId = Email;
+                    model.AccountBalance = model.AccountBalance;
+                    await _context.Bank.AddAsync(model);
+                    await _context.SaveChangesAsync();
+                    return Ok("Deposit Successful");
+                    }
+                
             }
             else
             {
